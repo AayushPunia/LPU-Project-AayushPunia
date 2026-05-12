@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web-fleet-deployment
+  labels:
+    app: web-fleet
+spec:
+  replicas: 3                          # Run 3 identical pods at all times
+  selector:
+    matchLabels:
+      app: web-fleet
+  template:
+    metadata:
+      labels:
+        app: web-fleet
+    spec:
+      containers:
+        - name: web-fleet-container
+          image: aayushpunia/lpu-web-fleet:v1   # <-- replace with your image
+          ports:
+            - containerPort: 80
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "64Mi"
+            limits:
+              cpu: "200m"
+              memory: "128Mi"
